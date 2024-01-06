@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { registerApi, loginApi, testApi } from '../../services/auth';
 import './sign-in.styles.scss';
 
 const defaultFormFields = {
@@ -15,8 +16,10 @@ const resetFormFields = () => {
     setFormFields(defaultFormFields);
 }
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('submitted');
+    await testApi();
 }
 
 const handleChange = (event) => {

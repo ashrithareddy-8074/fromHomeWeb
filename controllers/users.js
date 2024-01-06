@@ -87,3 +87,8 @@ module.exports.logout = async (req, res) => {
     res.clearCookie('refresh_token');
     res.send({ status: "Success", message: "Logged Out Sucessfully" });
 }
+
+module.exports.test = async (req, res) => {
+    console.log('test api');
+    return res.json({message:"success"});
+}

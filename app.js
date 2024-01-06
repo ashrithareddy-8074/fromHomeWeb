@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config()
 
 const ExpressError =  require('./utils/ExpressError');
@@ -16,13 +17,15 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true })
   }
 ).catch(err => console.log(process.env.DB_CONNECT, "Connection Failed", err));
 
+app.use(cors());
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false,limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', userRoutes);
-app.use('/food', foodRoutes);
-app.use('/requests', requestRoutes);
+app.use('/api/', userRoutes);
+app.use('/api/food', foodRoutes);
+app.use('/api/requests', requestRoutes);
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404))
